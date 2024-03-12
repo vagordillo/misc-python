@@ -1,0 +1,145 @@
+def main():
+    
+    name = "D's App"
+    
+    global menu
+    menu = {
+        "sku1" : {"name" : "Hamburger", "price" : 6.51},
+        "sku2" : {"name": "Cheeseburger", "price" : 7.75},
+        "sku3" : {"name": "Milkshake", "price" : 5.99},
+        "sku4" : {"name" : "Fries", "price" : 2.39},
+        "sku5" : {"name" : "Sub", "price" : 5.87},
+        "sku6" : {"name" : "Ice Cream", "price" : 1.55},
+        "sku7" : {"name": "Fountain Drink", "price" : 3.45},
+        "sku8" : {"name" : "Cookie", "price" : 3.15},
+        "sku9" : {"name" : "Brownie", "price" : 2.46},
+        "sku10" : {"name" : "Sauce", "price" : 0.75}
+    }
+    
+    appactions = {
+        1 : "Add a new menu item to the cart",
+        2 : "Remore a menu item from the cart",
+        3 : "Modify a cart item's quantity",
+        4 : "View cart",
+        5 : "Checkout",
+        6 : "Exit"
+    }
+    
+    global taxrate 
+    taxrate = 0.07
+    
+    global cart
+    cart = {}
+    
+    sku_prompt = "Please input the product's code number as displayed on the menu: "
+    
+    print("Welcome to", name)
+    print()
+    
+    in_use = True
+    
+    while in_use == True:
+        display_actions(appactions)
+        action = input("Please input the action you want to take: ")
+        print()
+        
+            
+    
+def display_actions(actions):
+    print("***** ORDERING ACTIONS *****")
+    print()
+    for key in actions:
+        print("(", key, ") ", actions[key], sep = "")
+    print()
+   
+
+def display_menu():
+    print("***** MENU *****")
+    print()
+    
+    for key in menu:
+        sku = key.lstrip("sku")
+        item = menu[key]["name"]
+        price = menu[key]["price"]
+        print("(", sku, ") ", item, ": $", price, sep = "")
+    
+    print()
+
+
+def add_to_cart(sku, qty):
+    print()
+    if sku in menu:
+        if sku in cart:
+            cart[sku] += qty
+        else:
+            cart[sku] = qty
+        print("Added", qty, "of", menu[sku]["name"], "to the cart.")
+    else:
+        print("Invalid input.")
+    print()
+
+
+def remove_from_cart(sku):
+    print()
+    if sku in cart:
+        removed_item = cart.pop(sku)
+        print(f"Removed", removed_item, "from the cart.")
+    else:
+        print("Invalid input not in cart.")
+    print()
+
+
+def modify_cart(sku, qty):
+    print()
+    if sku in cart:
+        if qty > 0:
+            cart[sku] = qty
+        else:
+            remove_from_cart(sku)
+        print("Modified", menu[sku]["name"], "quantity to", qty, "in the cart.")
+    else:
+        print("Invalid input currently not in cart.")
+    print()
+
+
+def view_cart():
+    print()
+    print("***** CART *****")
+    print()
+    
+    subtotal = 0
+    for key in cart:
+        qty = cart[key]
+        if key in menu:
+            subtotal += (qty * menu[key]["price"])
+            print(qty, "X", menu[key]["name"])
+    
+    tax = subtotal * taxrate
+    total = subtotal + tax
+    
+    print(f"Total: ${total:.2f}")
+    print()
+    
+
+def checkout():
+    print("**** CHECKOUT ****")
+    view_cart()
+    print("Your order has been submitted. Thank you for your purchase!")
+
+
+def get_sku_and_qty(sku_prompt, qty_prompt = None):
+    sku = input(sku_prompt)
+    sku = "sku" + sku
+    
+    if qty_prompt:
+        qty = input(qty_prompt)
+        if qty.isdigit():
+            qty = int(qty)
+        else:
+            qty = 1
+    
+    return (sku, qty) if qty_prompt else sku
+
+
+if __name__ == "__main__":
+    main()

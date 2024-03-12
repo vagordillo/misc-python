@@ -1,4 +1,6 @@
 # misc-python
 Miscellaneous Python Projects
 
-word-raider - A simple word-guessing game. You have five chances to guess a five-letter word from a list of 50 different words.
+- food-app: A terminal simulation of a food-ordering app. Practicing the use of Python dictionaries, global variables, and secondary functions.
+
+- word-raider: A simple word-guessing game. You have five chances to guess a five-letter word from a list of 50 different words.
