@@ -42,8 +42,32 @@ def main():
         display_actions(appactions)
         action = input("Please input the action you want to take: ")
         print()
+        match action:
+            case "1":
+                display_menu()
+                sku_input, qty_input = get_sku_and_qty(sku_prompt, "How many of this product? ")
+                add_to_cart(sku_input, qty_input)
+            case "2":
+                display_menu()
+                sku_input = get_sku_and_qty(sku_prompt)
+                remove_from_cart(sku_input)
+            case "3":
+                display_menu()
+                sku_input, qty_input = get_sku_and_qty(sku_prompt, "How many of this product? ")
+                modify_cart(sku_input, qty_input)
+            case "4":
+                view_cart()
+            case "5":
+                checkout()
+                in_use = False
+            case "6":
+                print("Thank you for using", name)
+                in_use = False
+            case _:
+                print("Incorrect input. Please input a number from the list of actions provided.")
+                print()
+                
         
-            
     
 def display_actions(actions):
     print("***** ORDERING ACTIONS *****")
@@ -83,7 +107,7 @@ def remove_from_cart(sku):
     print()
     if sku in cart:
         removed_item = cart.pop(sku)
-        print(f"Removed", removed_item, "from the cart.")
+        print(f"Removed", removed_item, "of", menu[sku]["name"], "from the cart.")
     else:
         print("Invalid input not in cart.")
     print()
